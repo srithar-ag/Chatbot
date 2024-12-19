@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Chatbot Toggle Button -->
+    <div id="chatbot-icon" onclick="toggleChatbot()">
+        <img src="chatbot-icon.png" alt="Chatbot Icon" title="Open Chatbot">
+    </div>
+
+    <!-- Chatbot Container -->
+    <div class="chatbot-container" id="chatbot-container">
+        <div class="chatbot-header">
+            <h2> XYZ University Chatbot</h2>
+            <button id="close-button" onclick="toggleChatbot()">×</button>
+        </div>
+        <div class="chatbot-messages" id="chatbot-messages" aria-live="polite">
+            <div class="chatbot-message">Hello! 👋 How can I assist you ? </div>
+            <div class="chatbot-message"> I am your XYZ University Assistant! Here are some Top Hightligths! Ask quires about University. </div>
+            <div class="chatbot-options">
+                <button class="option-button" onclick="handleOption('admission')">Admission Process</button>
+                <button class="option-button" onclick="handleOption('campus')">Campus Life</button>
+                <button class="option-button" onclick="handleOption('courses')">Courses</button>
+                <button class="option-button" onclick="handleOption('about XYZ')">About XZY</button>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="user-input" placeholder="Type your message..." aria-label="Chat Input">
+            <button id="send-button" aria-label="Send Message">➤</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
