@@ -1,0 +1,324 @@
+// Function to get a time-based greeting
+function getGreeting() {
+  const hour = new Date().getHours();
+  if (hour < 12) return "Good Morning! How can I assist you?";
+  else if (hour < 18) return "Good Afternoon! How can I assist you?";
+  return "Good Evening! How can I assist you?";
+}
+
+// Function to initialize chatbot with greeting and options
+ function initializeChatbot() {
+ // ... existing logic to display greeting and options ...
+}
+
+
+// Add initial greeting and options when chatbot opens
+function initializeChatbot() {
+  const chatbotMessages = document.getElementById("chatbot-messages");
+
+  // Check if the greeting is already displayed
+  const existingGreeting = chatbotMessages.querySelector(".chatbot-greeting");
+  if (!existingGreeting) {
+    // Add greeting
+    const greetingMessage = document.createElement("div");
+    greetingMessage.textContent = getGreeting();
+    greetingMessage.className = "chatbot-message chatbot-greeting";
+    chatbotMessages.appendChild(greetingMessage);
+
+    // Add options
+    displayChatbotOptions();
+  }
+
+  // Scroll to the bottom
+  chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+ 
+  // Display options
+  const optionsContainer = document.createElement("div");
+  optionsContainer.className = "chatbot-options";
+  
+  // Create buttons
+  const options = [
+      { id: "admission", text: "Admission Process" },
+      { id: "campus", text: "Campus Life" },
+      { id: "courses", text: "Courses" },
+      { id: "About DSU", text: "About DSU"},
+  ];
+
+  options.forEach(option => {
+      const button = document.createElement("button");
+      button.className = "option-button";
+      button.textContent = option.text;
+      button.onclick = () => handleOption(option.id);
+      optionsContainer.appendChild(button);
+  });
+
+  chatbotMessages.appendChild(optionsContainer);
+  scrollToBottom();
+}
+
+// Handle option buttons
+function handleOption(option) {
+  let response = "";
+
+  if (option === "admission") {
+      response = "The admission process involves the following steps:\n1. Submit the online application form.\n2. Attend the entrance exam (if required).\n3. Submit required documents.\n4. Pay the admission fee. Would you like more details?";
+  } else if (option === "campus") {
+      response = "Campus life  is vibrant and engaging! We offer:\n- State-of-the-art facilities\n- Clubs and extracurricular activities\n- Cafeterias and recreational areas.\nWhat aspect would you like to explore?";
+  } else if (option === "courses") {
+      response = "Our university offers a variety of courses, including:\n- Engineering\n- Management\n- Arts & Humanities\n- Science and Technology.\nWould you like to explore specific courses?";
+  } else if (option === "About XYZ") {
+      response = "XYZ is a multidisciplinary institution located in Tiruchirappalli, Tamil Nadu, India. DSU offers diverse programs in Medicine, Engineering, and many other streams.";
+  }
+
+  displayUserMessage(`Selected: ${option.charAt(0).toUpperCase() + option.slice(1)}`);
+  displayChatbotMessage(response);
+}
+
+// Function to toggle chatbot visibility
+function toggleChatbot() {
+  const chatbot = document.getElementById("chatbot-container");
+  const icon = document.getElementById("chatbot-icon");
+
+  if (chatbot.style.display === "none" || chatbot.style.display === "") {
+      chatbot.style.display = "flex";
+      icon.style.display = "none";
+
+      // Initialize chatbot with greeting and options
+      initializeChatbot();
+  } else {
+      chatbot.style.display = "none";
+      icon.style.display = "block";
+
+      // Clear messages for a fresh start next time
+      document.getElementById("chatbot-messages").innerHTML = "";
+  }
+}
+
+// Handle message sending
+document.getElementById("send-button").addEventListener("click", sendMessage);
+document.getElementById("user-input").addEventListener("keydown", (event) => {
+  if (event.key === "Enter") sendMessage();
+});
+
+function sendMessage() {
+  const userInput = document.getElementById("user-input").value.trim();
+  if (userInput === "") return;
+
+  displayUserMessage(userInput);
+  respondToUser(userInput);
+  document.getElementById("user-input").value = "";
+}
+
+// Display user's message
+function displayUserMessage(message) {
+  const userMessage = document.createElement("div");
+  userMessage.textContent = message;
+  userMessage.className = "user-message";
+  document.getElementById("chatbot-messages").appendChild(userMessage);
+  scrollToBottom();
+}
+
+// Display chatbot's message
+function displayChatbotMessage(message) {
+  const chatbotMessage = document.createElement("div");
+  chatbotMessage.textContent = message;
+  chatbotMessage.className = "chatbot-message";
+  document.getElementById("chatbot-messages").appendChild(chatbotMessage);
+  scrollToBottom();
+}
+
+// Scroll to the bottom of the chat
+function scrollToBottom() {
+  const messagesContainer = document.getElementById("chatbot-messages");
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+
+  function sendMessage() {
+    const userInput = document.getElementById("user-input").value.trim().toLowerCase();
+    if (userInput === "") return;
+  
+    displayUserMessage(userInput);
+    respondToUser(userInput);
+  
+    // Function to toggle the chatbot visibility
+function toggleChatbot() {
+  const chatbot = document.getElementById("chatbot-container");
+  const icon = document.getElementById("chatbot-icon");
+
+  if (chatbot.style.display === "none" || chatbot.style.display === "") {
+      chatbot.style.display = "flex"; // Show chatbot
+      icon.style.display = "none";   // Hide icon
+  } else {
+      chatbot.style.display = "none"; // Hide chatbot
+      icon.style.display = "block";   // Show icon
+  }
+}
+
+    // Clear the input field after sending the message
+    document.getElementById("user-input").value = "";
+  }
+  
+  function displayUserMessage(message) {
+    const userMessage = document.createElement("div");
+    userMessage.textContent = message;
+    userMessage.className = "user-message";
+    document.getElementById("chatbot-messages").appendChild(userMessage);
+  
+    // Scroll to the bottom
+    const messagesContainer = document.getElementById("chatbot-messages");
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+  
+  function displayChatbotMessage(message) {
+    const chatbotMessage = document.createElement("div");
+    chatbotMessage.textContent = message;
+    chatbotMessage.className = "chatbot-message";
+    document.getElementById("chatbot-messages").appendChild(chatbotMessage);
+  
+    // Scroll to the bottom
+    const messagesContainer = document.getElementById("chatbot-messages");
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+  
+  function displayTypingIndicator() {
+    const typing = document.createElement("div");
+    typing.textContent = "Typing...";
+    typing.id = "typing-indicator";
+    typing.className = "chatbot-message";
+    document.getElementById("chatbot-messages").appendChild(typing);
+  
+    const messagesContainer = document.getElementById("chatbot-messages");
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+  
+  function removeTypingIndicator() {
+    const typing = document.getElementById("typing-indicator");
+    if (typing) typing.remove();
+  }
+  
+function respondToUser(userInput) {
+    let response = "";
+    displayTypingIndicator(); // Show typing indicator
+  
+    setTimeout(() => {
+      removeTypingIndicator(); // Remove typing indicator
+      switch (true) {
+        case userInput.includes("hi") || userInput.includes("hello"):
+          response = "Hello 😊, How can I assist you?";
+          break;
+        
+        case userInput.includes("tell about you") || userInput.includes("who are you"):
+            response = "I am your Dhanalakshmi Srinivasan University chaatbot, You can ask me about student lif, admission process, courses, accomodation, Founder of dsu , fees structure and more";
+            break;
+
+       case userInput.includes("campus Life at dsu") || userInput.includes("student life"):
+          response = 
+           "Campus life at DSU is vibrant and engaging! We offer:\n- State-of-the-art facilities\n- Clubs and extracurricular activities\n- Cafeterias and recreational areas.\nWhat aspect would you like to explore?";
+          break;
+          
+      case userInput.includes("about dsu") || userInput.includes("tell me about dsu"):
+          response =
+            "Dhanalakshmi Srinivasan University (DSU) is a multidisciplinary institution located in Tiruchirappalli, Tamil Nadu, India. DSU offers diverse programs in Medicine, Engineering, and many other streams.";
+          break;
+  
+        case userInput.includes("admission") || userInput.includes("admission process"):
+          response =
+            "DSU invites applications for various degree programs. Admissions are merit-based. You can apply online through our portal or collect the application form at the campus.";
+          break;
+  
+        case userInput.includes("how to apply") || userInput.includes("steps to apply"):
+          response = `Steps to Apply:
+  1. Visit the DSU admission portal.
+  2. Register with your details.
+  3. Fill out the application form and upload required documents.
+  4. Submit your application online or at the campus.`;
+          break;
+  
+        case userInput.includes("courses") || userInput.includes("programs"):
+          response = `Courses at DSU include:
+  1. Medicine
+  2. Engineering
+  3. Allied Health Sciences
+  4. Agricultural Sciences
+  5. Management
+  6. Law
+  7. Architecture
+  8. Nursing, and more.`;
+          break;
+  
+        case userInput.includes("hostel") || userInput.includes("accommodation"):
+          response = `Hostel facilities at DSU include:
+  - Separate hostels for boys and girls.
+  - Wi-Fi-enabled rooms, modern amenities, and nutritious meals.
+  - Recreational facilities like fitness centers and yoga sessions.`;
+          break;
+  
+       case userInput.includes("contact") || userInput.includes("address"):
+          response =
+            "For admissions, contact us at +91 63841 76766 or email admissions@dsuniversity.ac.in. Address: NH-45, Trichy Chennai Trunk Road, Tiruchirappalli - 621 112, Tamil Nadu, India.";
+          break;
+  
+        case userInput.includes("fees") || userInput.includes("fee structure"):
+          response = 
+           "The fee structure varies by program. Please visit our official website or contact our admissions office for detailed information.";
+          break;
+        
+        case userInput.includes("who is the founder of dsu") || userInput.includes("who is the chancellor of dsu") || userInput.includes("founder of dsu"):
+          response = 
+           "Shri. A. Srinivasan - Founder & Chancellor of Dhanalakshmi Srinivasan Univeristy";
+          break;
+        
+        case userInput.includes(" Who is Pro Chancellor of dsu") || userInput.includes("pro chancellor of dsu"):
+          response = "Mrs.Ananthalakshmi Kathiravan - Pro Chancellor of Dhanalakshmi Srinivasan Univeristy";
+          break;
+
+        case userInput.includes("departments") || userInput.includes("how many departments") || userInput.includes("department"):
+         response = "Engineering Departments - CSE,AIDS,AIML, IOT,  Biotechnology, Cyber security, Block chain, Mechanical, ECE, EEE, Agriculture. Bsc., Arts and science - AIDS, CSE, IT,. Agriculture."
+         break;
+        
+       case userInput.includes(" Who is vice Chancellor of dsu") || userInput.includes("vice chancellor of dsu"):
+          response = "Air Marshal (Dr) C K Ranjan AVSM VSM (Retd) - Vice Chancellor of Dhanalakshmi Srinivasan Univeristy";
+          break;
+        
+        case userInput.includes(" Who is Academic Dean of dsu") || userInput.includes("academic dean of dsu"):
+          response = "Dr. J.M. Mathana Dean, Academic of Dhanalakshmi Srinivasan Univeristy";
+          break;
+    
+        case userInput.includes(" Who is registrar of dsu") || userInput.includes("registrar of dsu"):
+          response = "Dr. Dhanasekaran Devaraj M.E., Ph.D , Registrar of Dhanalakshmi Srinivasan Univeristy";
+          break;
+        
+        case userInput.includes(" events at dsu") || userInput.includes("what events going on dsu") || userInput.includes("events happened at dsu"):
+          response = "News & Events - Nuances of Technical Communication: An Appraisal\n, A CME PROGRAM PATHOLOGY IN MEDICAL EDUCATION\n,INTERNATIONAL DAY OF RADIOLOGY (IDOR 2K24), Application of Machine Learning in Mechanical Engineering, ICC FEST 2K24,  ICC - Awareness Programme for First Year SET Students 2024 Batch - 5th September 2024,  ICC - Awareness Programme for First Year SET Students 2024 Batch - 4th September 2024,  ICC - Awareness Programme for First Year SET Students 2024 Batch - 3rd September 2024, ICC - Awareness Programme for First Year SET Students - 29th August 2024, ICC - Awareness Programme for First Year SOAS Students - 16th July 2024, Study and Maintenance of Instruments/tools/equipments Utilized in Testing/Research/Institutional Laboratories - 21st October 2024 ,Freshers at School of Law - 18 October 2024, BPT and MPT Students Freshers Day - 21st October 2024,Organ Donation - Planting the Seeds of Awareness - 23rd October 2024, Fresher's Day on - 21st October 2024,Art from Waste - 23rd October 2024,NDLi Club & Readers Club - 23 October 2024, Freshers at School of Pharmacy - 18-10-2024";
+          break;
+
+        case userInput.includes(" r and d at dsu") || userInput.includes("research and devlopment at dsu") || userInput.includes("research and development"):
+          response = "Encourage and facilitate faculty and student research across various disciplines. Foster an environment conducive to innovation, creativity, and problem-solving. Promote collaborative research projects within the university and with external institutions. Provide resources, infrastructure, and funding support for research initiatives. Facilitate the dissemination of research findings through publications, conferences, and patent";
+          break;
+         
+        case userInputInput.includes("medicine") || caseInput.includes("mbbs"):
+          response = "Eligibility for Medicine (MBBS):\n- Age: Must be 17 years or older by December 31 of the admission year.\n- Academics: Passed 12th with PCB and English with at least 50% (40% for SC/ST/OBC-NCL).\n- Entrance Exam: Qualified NEET (UG).";
+          break;
+      
+        case userInput.includes("engineering") || caseInput.includes("eligiibility for engineering"):
+          response = "Eligibility for Engineering:\n- Academics: 50% aggregate in 10+2 with Mathematics, Physics, and Chemistry/CS/Electronics/Biotech (45% for SC/ST).\n- Entrance Exam: DSU-JET or JEE Main scores accepted.";
+          break;
+        
+        case userInput.includes("nursing") || caseInput.includes("nursing course"):
+          response =  "Eligibility for Nursing:\n- Academics: Passed 10+2 with Science (PCB and English) with 45% aggregate (40% for SC/ST)";
+          break;
+
+        case userInput.includes("law") || caseInput.includes("law course"):
+          response = "Eligibility for Law:\n- Academics: Completed 10+2 with 60% marks (70% for NRI candidates).\n- Selection: Based on personal interview.";
+          break;
+
+        default:
+          response ="I couldn't understand your query. Could you please rephrase or ask about admissions, courses or any other?";
+          break;
+      }
+    
+      displayChatbotMessage(response);
+    }, 1000); // Delay to simulate typing
+  }
+  
